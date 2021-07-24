@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  scroll-behavior: smooth;
+
+  --white: #f8f8f8;
+  --dark-gray: rgb(75, 75, 75);
+  --green: #00af91;
+  --dark-green: #007965;
+}
+
+body {
+  background-color: var(--white);
+  color: var(--dark-gray);
+}
+
+body,
+input,
+button,
+textarea {
+  font: 400 1rem "Roboto", sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+}
