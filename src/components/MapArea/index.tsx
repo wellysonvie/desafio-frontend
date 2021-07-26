@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 
 import { useMapContext } from "../../contexts/MapContext";
 import { currentLocationMarkerIcon } from "../../utils/markerIcons";
+import SearchBar from "../SearchBar";
 
 import "leaflet/dist/leaflet.css";
 import styles from "./styles.module.scss";
@@ -35,6 +36,7 @@ const MapArea = () => {
 
   return (
     <section className={styles.mapArea}>
+      <SearchBar />
       <MapContainer
         className={styles.mapContainer}
         center={[currentPosition.latitude, currentPosition.longitude]}
