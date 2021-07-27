@@ -6,8 +6,8 @@ import {
   useState,
 } from "react";
 
-type Place = {
-  id?: number;
+export type PlaceType = {
+  id: number;
   postalCode: number;
   street: string;
   neighborhood: string;
@@ -15,7 +15,7 @@ type Place = {
   state: string;
   latitude: number;
   longitude: number;
-  favorite?: boolean;
+  favorite: boolean;
 };
 
 type Position = {
@@ -25,10 +25,18 @@ type Position = {
 
 type MapContextData = {
   currentPosition: Position;
-  savedPlaces: Place[];
-  getSavedPlaceById: (placeId: number) => Place | undefined;
-  getFavoritePlaces: () => Place[];
-  addSavedPlace: (place: Place) => void;
+  savedPlaces: PlaceType[];
+  getSavedPlaceById: (placeId: number) => PlaceType | undefined;
+  getFavoritePlaces: () => PlaceType[];
+  addSavedPlace: (
+    postalCode: number,
+    street: string,
+    neighborhood: string,
+    city: string,
+    state: string,
+    latitude: number,
+    longitude: number
+  ) => void;
   favoriteSavedPlace: (placeId: number) => void;
   deleteSavedPlace: (placeId: number) => void;
 };
@@ -45,7 +53,7 @@ export function MapContextProvider({ children }: MapContextProviderProps) {
     longitude: -42.811305,
   });
 
-  const [savedPlaces, setSavedPlaces] = useState<Place[]>([]);
+  const [savedPlaces, setSavedPlaces] = useState<PlaceType[]>([]);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -58,11 +66,19 @@ export function MapContextProvider({ children }: MapContextProviderProps) {
     }
   }, []);
 
-  function addSavedPlace(place: Place) {
+  function addSavedPlace(
+    postalCode: number,
+    street: string,
+    neighborhood: string,
+    city: string,
+    state: string,
+    latitude: number,
+    longitude: number
+  ) {
     function generateID() {
       return (
         savedPlaces.reduce((max, item) => {
-          if (item.id && item.id > max) max = item.id;
+          if (item.id > max) max = item.id;
           return max;
         }, 0) + 1
       );
@@ -70,7 +86,17 @@ export function MapContextProvider({ children }: MapContextProviderProps) {
 
     setSavedPlaces([
       ...savedPlaces,
-      { ...place, id: generateID(), favorite: false },
+      {
+        postalCode,
+        street,
+        neighborhood,
+        city,
+        state,
+        latitude,
+        longitude,
+        id: generateID(),
+        favorite: false,
+      },
     ]);
   }
 

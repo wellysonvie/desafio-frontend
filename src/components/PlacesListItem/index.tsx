@@ -2,10 +2,16 @@ import { MdFavoriteBorder } from "react-icons/md";
 import { HiOutlineTrash } from "react-icons/hi";
 import cx from "classnames";
 
+import { PlaceType } from "../../contexts/MapContext";
+
 import styles from "./styles.module.scss";
 import { useState } from "react";
 
-const PlacesListItem = () => {
+type PlacesListItemProps = {
+  data: PlaceType;
+};
+
+const PlacesListItem = ({ data }: PlacesListItemProps) => {
   const [isHighlighted, setIsHighlighted] = useState<boolean>(false);
 
   function handleClick() {
@@ -18,10 +24,12 @@ const PlacesListItem = () => {
       onClick={handleClick}
     >
       <div className={styles.details}>
-        <h1>CEP: 05639100</h1>
-        <h2>Rua Paulo Sérgio de Macedo</h2>
-        <h3>Lar São Paulo</h3>
-        <p>São Paulo, SP</p>
+        <h1>CEP: {data.postalCode}</h1>
+        <h2>{data.street}</h2>
+        <h3>{data.neighborhood}</h3>
+        <p>
+          {data.city}, {data.state}
+        </p>
       </div>
       <div className={styles.options}>
         <MdFavoriteBorder />

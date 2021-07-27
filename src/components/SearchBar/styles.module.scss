@@ -39,6 +39,12 @@
         width: 50%;
         height: 50%;
       }
+
+      transition: filter 0.2s;
+
+      &:hover {
+        filter: brightness(0.95);
+      }
     }
   }
 }

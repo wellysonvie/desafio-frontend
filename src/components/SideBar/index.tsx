@@ -2,35 +2,30 @@ import { useState } from "react";
 import { MdBookmarkBorder, MdFavoriteBorder } from "react-icons/md";
 import cx from "classnames";
 
+import { useMapContext } from "../../contexts/MapContext";
 import PlacesList from "../PlacesList";
 
 import styles from "./styles.module.scss";
 import destinationsImg from "../../assets/destinations.svg";
 
 const SideBar = () => {
-  const [showVisitedPlacesList, setShowVisitedPlacesList] =
-    useState<boolean>(true);
+  const { savedPlaces, getFavoritePlaces } = useMapContext();
+
   const [showFavoritePlacesList, setShowFavoritePlacesList] =
     useState<boolean>(false);
 
-  function handleShowVisitedPlacesList() {
-    setShowVisitedPlacesList(true);
-    setShowFavoritePlacesList(false);
-  }
-
-  function handleShowFavoritePlacesList() {
-    setShowFavoritePlacesList(true);
-    setShowVisitedPlacesList(false);
-  }
-
   return (
     <aside className={styles.sidebar}>
-      <div className={cx(styles.listSelector, { disabled: true })}>
+      <div
+        className={cx(styles.listSelector, {
+          disabled: savedPlaces.length === 0,
+        })}
+      >
         <div
           className={cx(styles.listSelectorItem, {
-            active: showVisitedPlacesList,
+            active: !showFavoritePlacesList,
           })}
-          onClick={handleShowVisitedPlacesList}
+          onClick={() => setShowFavoritePlacesList(!showFavoritePlacesList)}
         >
           <MdBookmarkBorder />
           <span>Locais visitados</span>
@@ -39,15 +34,17 @@ const SideBar = () => {
           className={cx(styles.listSelectorItem, {
             active: showFavoritePlacesList,
           })}
-          onClick={handleShowFavoritePlacesList}
+          onClick={() => setShowFavoritePlacesList(!showFavoritePlacesList)}
         >
           <MdFavoriteBorder />
           <span>Favoritos</span>
         </div>
       </div>
 
-      {false ? (
-        <PlacesList />
+      {savedPlaces.length > 0 ? (
+        <PlacesList
+          data={showFavoritePlacesList ? getFavoritePlaces() : savedPlaces}
+        />
       ) : (
         <div className={styles.emptyList}>
           <img src={destinationsImg} alt="Destinos" />

@@ -1,9 +1,12 @@
+import { PlaceType } from "../../contexts/MapContext";
 import PlacesListItem from "../PlacesListItem";
 import styles from "./styles.module.scss";
 
-const PlacesList = () => {
-  const data: [] = [];
+type PlacesListProps = {
+  data: PlaceType[];
+};
 
+const PlacesList = ({ data }: PlacesListProps) => {
   if (data.length === 0) {
     return (
       <div className={styles.emptyList}>
@@ -14,18 +17,9 @@ const PlacesList = () => {
 
   return (
     <ul className={styles.placesList}>
-      <PlacesListItem />
-      <PlacesListItem />
-      <PlacesListItem />
-      <PlacesListItem />
-      <PlacesListItem />
-      <PlacesListItem />
-      <PlacesListItem />
-      <PlacesListItem />
-      <PlacesListItem />
-      <PlacesListItem />
-      <PlacesListItem />
-      <PlacesListItem />
+      {data.map((item) => (
+        <PlacesListItem key={item.id} data={item} />
+      ))}
     </ul>
   );
 };

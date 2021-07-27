@@ -1,5 +1,6 @@
 import { FormEvent, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import SearchResultModal from "../SearchResultModal";
 
 import { searchByPostalCode } from "../../services/BrasilAPI";
 
@@ -20,6 +21,7 @@ type Place = {
 const SearchBar = () => {
   const [query, setQuery] = useState<string>("");
   const [result, setResult] = useState<Place>();
+  const [showSearchResultModal, setShowSearchResultModal] = useState(false);
 
   async function handleSearch(event: FormEvent) {
     event.preventDefault();
@@ -36,6 +38,7 @@ const SearchBar = () => {
 
     if (place) {
       setResult(place);
+      setShowSearchResultModal(true);
     } else {
       toast.error("CEP não encontrado.", {
         position: "top-right",
@@ -55,6 +58,13 @@ const SearchBar = () => {
         <button onClick={handleSearch}>
           <img src={searchImg} alt="Pesquisar" />
         </button>
+        {result && (
+          <SearchResultModal
+            modalIsOpen={showSearchResultModal}
+            closeModal={() => setShowSearchResultModal(false)}
+            place={result}
+          />
+        )}
       </form>
       <Toaster />
     </div>
