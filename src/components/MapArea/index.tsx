@@ -1,33 +1,64 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 
 import { useMapContext } from "../../contexts/MapContext";
-import { currentLocationMarkerIcon } from "../../utils/markerIcons";
 import SearchBar from "../SearchBar";
+import {
+  currentLocationMarkerIcon,
+  locationMarkerIcon,
+  favoriteLocationMarkerIcon,
+} from "../../utils/markerIcons";
 
 import "leaflet/dist/leaflet.css";
 import styles from "./styles.module.scss";
 
 const MapAreaMarkers = () => {
-  const { currentPosition } = useMapContext();
+  const { currentPosition, savedPlaces } = useMapContext();
   const map = useMap();
 
+  const mapFlyToPosition = useCallback(
+    (latitude: number, longitude: number) => {
+      map.flyTo([latitude, longitude], 13);
+    },
+    [map]
+  );
+
   useEffect(() => {
-    map.flyTo(
-      [currentPosition.latitude, currentPosition.longitude],
-      map.getZoom()
-    );
-  }, [currentPosition, map]);
+    mapFlyToPosition(currentPosition.latitude, currentPosition.longitude);
+  }, [currentPosition, map, mapFlyToPosition]);
+
+  useEffect(() => {
+    if (savedPlaces.length > 0) {
+      const lastItem = savedPlaces[savedPlaces.length - 1];
+      mapFlyToPosition(lastItem.latitude, lastItem.longitude);
+    } else {
+      mapFlyToPosition(currentPosition.latitude, currentPosition.longitude);
+    }
+  }, [savedPlaces, map, mapFlyToPosition, currentPosition]);
 
   return (
-    <Marker
-      icon={currentLocationMarkerIcon}
-      position={[currentPosition.latitude, currentPosition.longitude]}
-    >
-      <Popup>
-        A pretty CSS3 popup. <br /> Easily customizable.
-      </Popup>
-    </Marker>
+    <>
+      <Marker
+        icon={currentLocationMarkerIcon}
+        position={[currentPosition.latitude, currentPosition.longitude]}
+      >
+        <Popup>
+          A pretty CSS3 popup. <br /> Easily customizable.
+        </Popup>
+      </Marker>
+
+      {savedPlaces.map((item) => (
+        <Marker
+          key={item.id}
+          icon={item.favorite ? favoriteLocationMarkerIcon : locationMarkerIcon}
+          position={[item.latitude, item.longitude]}
+        >
+          <Popup>
+            A pretty CSS3 popup. <br /> Easily customizable.
+          </Popup>
+        </Marker>
+      ))}
+    </>
   );
 };
 
@@ -40,7 +71,7 @@ const MapArea = () => {
       <MapContainer
         className={styles.mapContainer}
         center={[currentPosition.latitude, currentPosition.longitude]}
-        zoom={14}
+        zoom={13}
       >
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

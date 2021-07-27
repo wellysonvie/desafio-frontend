@@ -23,7 +23,7 @@ export async function searchByPostalCode(postalCode: number) {
         city: data.city,
         state: data.state,
         latitude: data.location.coordinates.latitude,
-        longitude: data.longitude,
+        longitude: data.location.coordinates.longitude,
       } as Place;
     }
   } catch (error) {
