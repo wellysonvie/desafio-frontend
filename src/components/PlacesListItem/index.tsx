@@ -1,4 +1,4 @@
-import { MdFavoriteBorder } from "react-icons/md";
+import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { HiOutlineTrash } from "react-icons/hi";
 import cx from "classnames";
 
@@ -12,12 +12,16 @@ type PlacesListItemProps = {
 };
 
 const PlacesListItem = ({ data }: PlacesListItemProps) => {
-  const { deleteSavedPlace } = useMapContext();
+  const { setFavoriteInSavedPlace, deleteSavedPlace } = useMapContext();
 
   const [isHighlighted, setIsHighlighted] = useState<boolean>(false);
 
   function handleClick() {
     setIsHighlighted(!isHighlighted);
+  }
+
+  function handleFavorite() {
+    setFavoriteInSavedPlace(data.id, !data.favorite);
   }
 
   function handleDelete() {
@@ -38,7 +42,13 @@ const PlacesListItem = ({ data }: PlacesListItemProps) => {
         </p>
       </div>
       <div className={styles.options}>
-        <MdFavoriteBorder />
+        <span onClick={handleFavorite}>
+          {data.favorite ? (
+            <MdFavorite className={styles.favorite} />
+          ) : (
+            <MdFavoriteBorder />
+          )}
+        </span>
         <HiOutlineTrash onClick={handleDelete} />
       </div>
     </ul>

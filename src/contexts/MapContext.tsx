@@ -37,7 +37,7 @@ type MapContextData = {
     latitude: number,
     longitude: number
   ) => void;
-  favoriteSavedPlace: (placeId: number) => void;
+  setFavoriteInSavedPlace: (placeId: number, favorite: boolean) => void;
   deleteSavedPlace: (placeId: number) => void;
 };
 
@@ -108,11 +108,11 @@ export function MapContextProvider({ children }: MapContextProviderProps) {
     return savedPlaces.filter((item) => item.favorite);
   }
 
-  function favoriteSavedPlace(placeId: number) {
+  function setFavoriteInSavedPlace(placeId: number, favorite: boolean) {
     setSavedPlaces(
       savedPlaces.map((item) => {
         if (item.id === placeId) {
-          return { ...item, favorite: true };
+          return { ...item, favorite };
         }
         return item;
       })
@@ -131,7 +131,7 @@ export function MapContextProvider({ children }: MapContextProviderProps) {
         getSavedPlaceById,
         getFavoritePlaces,
         addSavedPlace,
-        favoriteSavedPlace,
+        setFavoriteInSavedPlace,
         deleteSavedPlace,
       }}
     >
