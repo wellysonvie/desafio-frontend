@@ -1,0 +1,53 @@
+.markerPopup {
+  .description {
+    width: 100%;
+    padding: 1rem 1rem 0.6rem;
+
+    h1 {
+      margin-bottom: 0.6rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--gray-500);
+    }
+
+    p {
+      margin: 0.5rem 0;
+      line-height: 1.2;
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: var(--gray-500);
+    }
+  }
+
+  a {
+    width: 100%;
+    height: 3rem;
+    border-radius: 0 0 12px 12px;
+    background-color: var(--gray-50);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--blue-500);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: filter 0.2s;
+
+    &:hover {
+      filter: brightness(0.95);
+    }
+  }
+
+  & :global .leaflet-popup-content-wrapper {
+    padding: 0;
+
+    & :global .leaflet-popup-content {
+      margin: 0;
+    }
+  }
+
+  & :global .leaflet-popup-tip-container {
+    display: none;
+  }
+}

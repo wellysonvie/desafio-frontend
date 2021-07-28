@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 
 import { useMapContext } from "../../contexts/MapContext";
 import SearchBar from "../SearchBar";
+import CustomMarkerPopup from "../CustomMarkerPopup";
 import {
   currentLocationMarkerIcon,
   locationMarkerIcon,
@@ -59,9 +60,7 @@ const MapAreaMarkers = () => {
           savedPlaces[specificSavedPlaceIndex].longitude,
         ]}
       >
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
-        </Popup>
+        <CustomMarkerPopup data={savedPlaces[specificSavedPlaceIndex]} />
       </Marker>
     );
   }
@@ -72,9 +71,7 @@ const MapAreaMarkers = () => {
         icon={currentLocationMarkerIcon}
         position={[currentPosition.latitude, currentPosition.longitude]}
       >
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
-        </Popup>
+        <Popup closeButton={false}>Sua localização atual</Popup>
       </Marker>
 
       {savedPlaces.map((item) => (
@@ -83,9 +80,7 @@ const MapAreaMarkers = () => {
           icon={item.favorite ? favoriteLocationMarkerIcon : locationMarkerIcon}
           position={[item.latitude, item.longitude]}
         >
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
+          <CustomMarkerPopup data={item} />
         </Marker>
       ))}
     </>
