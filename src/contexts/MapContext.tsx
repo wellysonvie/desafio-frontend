@@ -26,6 +26,8 @@ type Position = {
 type MapContextData = {
   currentPosition: Position;
   savedPlaces: PlaceType[];
+  specificSavedPlaceIndex: number | undefined;
+  setSpecificSavedPlaceIndex: (index: number | undefined) => void;
   getSavedPlaceById: (placeId: number) => PlaceType | undefined;
   getFavoritePlaces: () => PlaceType[];
   addSavedPlace: (
@@ -55,6 +57,9 @@ export function MapContextProvider({ children }: MapContextProviderProps) {
 
   const [savedPlaces, setSavedPlaces] = useState<PlaceType[]>([]);
 
+  const [specificSavedPlaceIndex, setSpecificSavedPlaceIndex] =
+    useState<number>();
+
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -65,6 +70,10 @@ export function MapContextProvider({ children }: MapContextProviderProps) {
       });
     }
   }, []);
+
+  useEffect(() => {
+    if (savedPlaces.length === 0) setSpecificSavedPlaceIndex(undefined);
+  }, [savedPlaces]);
 
   function addSavedPlace(
     postalCode: number,
@@ -128,6 +137,8 @@ export function MapContextProvider({ children }: MapContextProviderProps) {
       value={{
         currentPosition,
         savedPlaces,
+        specificSavedPlaceIndex,
+        setSpecificSavedPlaceIndex,
         getSavedPlaceById,
         getFavoritePlaces,
         addSavedPlace,

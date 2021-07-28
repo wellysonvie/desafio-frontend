@@ -13,7 +13,8 @@ import "leaflet/dist/leaflet.css";
 import styles from "./styles.module.scss";
 
 const MapAreaMarkers = () => {
-  const { currentPosition, savedPlaces } = useMapContext();
+  const { currentPosition, savedPlaces, specificSavedPlaceIndex } =
+    useMapContext();
   const map = useMap();
 
   const mapFlyToPosition = useCallback(
@@ -35,6 +36,35 @@ const MapAreaMarkers = () => {
       mapFlyToPosition(currentPosition.latitude, currentPosition.longitude);
     }
   }, [savedPlaces, map, mapFlyToPosition, currentPosition]);
+
+  useEffect(() => {
+    if (specificSavedPlaceIndex !== undefined) {
+      mapFlyToPosition(
+        savedPlaces[specificSavedPlaceIndex].latitude,
+        savedPlaces[specificSavedPlaceIndex].longitude
+      );
+    }
+  }, [savedPlaces, specificSavedPlaceIndex, mapFlyToPosition]);
+
+  if (specificSavedPlaceIndex !== undefined) {
+    return (
+      <Marker
+        icon={
+          savedPlaces[specificSavedPlaceIndex].favorite
+            ? favoriteLocationMarkerIcon
+            : locationMarkerIcon
+        }
+        position={[
+          savedPlaces[specificSavedPlaceIndex].latitude,
+          savedPlaces[specificSavedPlaceIndex].longitude,
+        ]}
+      >
+        <Popup>
+          A pretty CSS3 popup. <br /> Easily customizable.
+        </Popup>
+      </Marker>
+    );
+  }
 
   return (
     <>

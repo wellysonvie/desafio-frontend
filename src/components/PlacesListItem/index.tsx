@@ -1,3 +1,4 @@
+import { MouseEvent, useEffect, useState } from "react";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { HiOutlineTrash } from "react-icons/hi";
 import cx from "classnames";
@@ -5,26 +6,50 @@ import cx from "classnames";
 import { PlaceType, useMapContext } from "../../contexts/MapContext";
 
 import styles from "./styles.module.scss";
-import { useState } from "react";
 
 type PlacesListItemProps = {
   data: PlaceType;
 };
 
 const PlacesListItem = ({ data }: PlacesListItemProps) => {
-  const { setFavoriteInSavedPlace, deleteSavedPlace } = useMapContext();
+  const {
+    savedPlaces,
+    setFavoriteInSavedPlace,
+    deleteSavedPlace,
+    specificSavedPlaceIndex,
+    setSpecificSavedPlaceIndex,
+  } = useMapContext();
 
   const [isHighlighted, setIsHighlighted] = useState<boolean>(false);
 
+  useEffect(() => {
+    setIsHighlighted(() => {
+      if (
+        specificSavedPlaceIndex !== undefined &&
+        savedPlaces[specificSavedPlaceIndex].id === data.id
+      ) {
+        return true;
+      }
+      return false;
+    });
+  }, [savedPlaces, specificSavedPlaceIndex, data]);
+
   function handleClick() {
-    setIsHighlighted(!isHighlighted);
+    if (!isHighlighted)
+      setSpecificSavedPlaceIndex(
+        savedPlaces.findIndex((item) => item.id === data.id)
+      );
+    else setSpecificSavedPlaceIndex(undefined);
   }
 
-  function handleFavorite() {
+  function handleFavorite(event: MouseEvent) {
+    event.stopPropagation();
     setFavoriteInSavedPlace(data.id, !data.favorite);
   }
 
-  function handleDelete() {
+  function handleDelete(event: MouseEvent) {
+    event.stopPropagation();
+    if (isHighlighted) setSpecificSavedPlaceIndex(undefined);
     deleteSavedPlace(data.id);
   }
 
