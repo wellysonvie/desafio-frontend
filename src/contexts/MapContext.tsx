@@ -55,7 +55,10 @@ export function MapContextProvider({ children }: MapContextProviderProps) {
     longitude: -42.811305,
   });
 
-  const [savedPlaces, setSavedPlaces] = useState<PlaceType[]>([]);
+  const [savedPlaces, setSavedPlaces] = useState<PlaceType[]>(() => {
+    const currentValue = window.localStorage.getItem("savedPlaces");
+    return JSON.parse(currentValue || "[]");
+  });
 
   const [specificSavedPlaceIndex, setSpecificSavedPlaceIndex] =
     useState<number>();
@@ -72,6 +75,7 @@ export function MapContextProvider({ children }: MapContextProviderProps) {
   }, []);
 
   useEffect(() => {
+    window.localStorage.setItem("savedPlaces", JSON.stringify(savedPlaces));
     if (savedPlaces.length === 0) setSpecificSavedPlaceIndex(undefined);
   }, [savedPlaces]);
 
