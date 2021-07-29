@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
+import cx from "classnames";
 import { useMapContext } from "../../contexts/MapContext";
 
 import styles from "./styles.module.scss";
@@ -25,6 +27,8 @@ type Inputs = {
   neighborhood: string;
   city: string;
   state: string;
+  latitude: number;
+  longitude: number;
 };
 
 const PlaceForm = ({ closeModal, data }: PlaceFormProps) => {
@@ -35,6 +39,14 @@ const PlaceForm = ({ closeModal, data }: PlaceFormProps) => {
   } = useForm<Inputs>();
 
   const { addSavedPlace, getSavedPlaceByPostalCode } = useMapContext();
+
+  useEffect(() => {
+    if (!(data.latitude || data.longitude)) {
+      toast.error("Coordenadas não encontradas.", {
+        position: "top-right",
+      });
+    }
+  }, [data]);
 
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
     if (getSavedPlaceByPostalCode(formData.postalCode)) {
@@ -50,8 +62,8 @@ const PlaceForm = ({ closeModal, data }: PlaceFormProps) => {
       formData.neighborhood,
       formData.city,
       formData.state,
-      data.latitude,
-      data.longitude
+      formData.latitude,
+      formData.longitude
     );
 
     toast.success("Local salvo com sucesso.", {
@@ -113,6 +125,36 @@ const PlaceForm = ({ closeModal, data }: PlaceFormProps) => {
           className={errors.state && styles.inputError}
         />
         {errors.state && <span>Preencha este campo</span>}
+
+        <div
+          id="coordinates"
+          className={cx(styles.formGroup, {
+            hidden: data.latitude && data.longitude,
+          })}
+        >
+          <label htmlFor="coordinates">Coordenadas:</label>
+          <div>
+            <input
+              id="latitude"
+              type="number"
+              placeholder="Latitude"
+              {...register("latitude", { required: true })}
+              defaultValue={data?.latitude}
+              className={errors.latitude && styles.inputError}
+            />
+            <input
+              id="longitude"
+              type="number"
+              placeholder="Longitude"
+              {...register("longitude", { required: true })}
+              defaultValue={data?.longitude}
+              className={errors.longitude && styles.inputError}
+            />
+          </div>
+          {(errors.latitude || errors.longitude) && (
+            <span>Preencha estes campos</span>
+          )}
+        </div>
       </fieldset>
       <div className={styles.formOptions}>
         <button className={styles.btnCancel} onClick={closeModal}>

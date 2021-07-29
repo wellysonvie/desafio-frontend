@@ -23,12 +23,31 @@
         border-color: var(--red-400);
         outline-color: var(--red-400);
       }
+
+      &::placeholder {
+        color: var(--gray-400);
+      }
     }
 
     span {
       font-weight: 300;
       font-size: 0.875rem;
       color: var(--red-400);
+    }
+
+    .formGroup {
+      width: 100%;
+      margin-top: 0.5rem;
+
+      > div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      input {
+        flex-basis: 49%;
+      }
     }
   }
 
