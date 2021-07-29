@@ -14,8 +14,16 @@ const SideBar = () => {
   const [showFavoritePlacesList, setShowFavoritePlacesList] =
     useState<boolean>(false);
 
+  const [expanded, setExpanded] = useState<boolean>(false);
+
   return (
-    <aside className={styles.sidebar}>
+    <aside className={cx(styles.sidebar, { expand: expanded })}>
+      <button
+        className={styles.btnExpand}
+        onClick={() => setExpanded(!expanded)}
+      >
+        {expanded ? "Fechar" : "Expandir"}
+      </button>
       <div
         className={cx(styles.listSelector, {
           disabled: savedPlaces.length === 0,

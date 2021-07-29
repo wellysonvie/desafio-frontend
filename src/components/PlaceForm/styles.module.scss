@@ -75,3 +75,23 @@
     }
   }
 }
+
+@media screen and (max-width: 640px) {
+  .placeForm {
+    fieldset {
+      padding: 1.5rem;
+
+      input {
+        padding: 0.7rem 0.9rem;
+      }
+    }
+
+    .formOptions {
+      margin-top: 0.2rem;
+
+      button {
+        height: 3.5rem;
+      }
+    }
+  }
+}

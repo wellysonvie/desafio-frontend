@@ -13,3 +13,13 @@
 :global .leaflet-container {
   z-index: 0;
 }
+
+@media screen and (max-width: 768px) {
+  .mapArea .mapContainer {
+    height: 60%;
+  }
+
+  :global .leaflet-control-container {
+    display: none;
+  }
+}

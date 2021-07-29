@@ -2,13 +2,17 @@
   width: 27rem;
   height: 100%;
   background-color: var(--gray-50);
-  box-shadow: 4px 0 4px rgba(0, 0, 0, 0.15);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.15);
 
   position: relative;
-  z-index: 5;
+  z-index: 10;
 
   display: flex;
   flex-direction: column;
+
+  .btnExpand {
+    display: none;
+  }
 
   .listSelector {
     width: 100%;
@@ -55,7 +59,9 @@
   .emptyList {
     flex: 100%;
     width: 100%;
-    padding: 2rem;
+    padding: 3rem;
+
+    overflow-y: auto;
 
     display: flex;
     flex-direction: column;
@@ -65,7 +71,7 @@
     img {
       width: 60%;
       height: auto;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
     }
 
     p {
@@ -78,13 +84,91 @@
 
     ul {
       margin-top: 1rem;
-      list-style: inside;
+      list-style: disc;
 
       li {
         margin: 0.6rem 0;
         font-size: 1rem;
         color: var(--gray-400);
       }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .sidebar {
+    flex-basis: 40%;
+    min-width: 22rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 45%;
+    min-height: 16rem;
+    width: 100%;
+    border-radius: 15px 15px 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.15);
+
+    flex-direction: column;
+
+    .btnExpand {
+      order: 0;
+      width: 100%;
+      min-height: 2.5rem;
+      border-bottom: 1px solid var(--gray-300);
+      background-color: transparent;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--gray-400);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &:global.expand {
+      height: 100%;
+      border-radius: 0;
+    }
+
+    .listSelector {
+      order: 2;
+      box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.15);
+    }
+
+    .emptyList {
+      order: 1;
+    }
+
+    &:not(:global .expand) .emptyList img {
+      display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .sidebar {
+    .emptyList {
+      img {
+        width: 40%;
+        margin-bottom: 2rem;
+      }
+
+      p {
+        font-size: 1.2rem;
+      }
+
+      ul li {
+        font-size: 0.875rem;
+      }
+    }
+
+    .listSelector .listSelectorItem {
+      height: 3.5rem;
     }
   }
 }

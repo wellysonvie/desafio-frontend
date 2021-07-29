@@ -2,11 +2,11 @@
   position: absolute;
   z-index: 5;
   top: 3rem;
-  left: calc(50% - 12rem);
-  width: 24rem;
+  left: calc(50% - min(12rem, 45vw));
+  width: min(24rem, 90vw);
   height: 3.5rem;
   border-radius: 5px;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.15);
 
   form {
     width: 100%;
@@ -46,5 +46,11 @@
         filter: brightness(0.95);
       }
     }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .searchBar {
+    top: 2rem;
   }
 }

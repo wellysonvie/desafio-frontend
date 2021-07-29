@@ -28,7 +28,18 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 10;
+  z-index: 20;
   background-color: rgba(0, 0, 0, 0.1);
   overflow: auto;
+}
+
+@media screen and (max-width: 640px) {
+  .searchResultModal .searchResultModalContent {
+    padding-top: 1.5rem;
+
+    h2 {
+      padding: 0 1.5rem;
+      font-size: 1.3rem;
+    }
+  }
 }

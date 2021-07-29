@@ -53,8 +53,10 @@
   &:global.highlighted {
     background-color: var(--gray-200);
   }
+}
 
-  &:not(:global .highlighted):hover {
+@media (min-width: 1280px) {
+  .placesListItem:not(:global .highlighted):hover {
     background-color: lighten(#e5e7eb, 2.2%);
   }
 }
