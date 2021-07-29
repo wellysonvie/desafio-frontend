@@ -1,4 +1,5 @@
 import { useForm, SubmitHandler } from "react-hook-form";
+import toast from "react-hot-toast";
 import { useMapContext } from "../../contexts/MapContext";
 
 import styles from "./styles.module.scss";
@@ -33,9 +34,16 @@ const PlaceForm = ({ closeModal, data }: PlaceFormProps) => {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const { addSavedPlace } = useMapContext();
+  const { addSavedPlace, getSavedPlaceByPostalCode } = useMapContext();
 
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
+    if (getSavedPlaceByPostalCode(formData.postalCode)) {
+      toast.error("Este CEP já existe na sua lista.", {
+        position: "top-right",
+      });
+      return;
+    }
+
     addSavedPlace(
       formData.postalCode,
       formData.street,
@@ -45,6 +53,10 @@ const PlaceForm = ({ closeModal, data }: PlaceFormProps) => {
       data.latitude,
       data.longitude
     );
+
+    toast.success("Local salvo com sucesso.", {
+      position: "top-right",
+    });
 
     closeModal();
   };

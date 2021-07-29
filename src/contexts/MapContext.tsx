@@ -29,6 +29,7 @@ type MapContextData = {
   specificSavedPlaceIndex: number | undefined;
   setSpecificSavedPlaceIndex: (index: number | undefined) => void;
   getSavedPlaceById: (placeId: number) => PlaceType | undefined;
+  getSavedPlaceByPostalCode: (postalCode: number) => PlaceType | undefined;
   getFavoritePlaces: () => PlaceType[];
   addSavedPlace: (
     postalCode: number,
@@ -117,6 +118,10 @@ export function MapContextProvider({ children }: MapContextProviderProps) {
     return savedPlaces.find((item) => item.id === placeId);
   }
 
+  function getSavedPlaceByPostalCode(postalCode: number) {
+    return savedPlaces.find((item) => item.postalCode === postalCode);
+  }
+
   function getFavoritePlaces() {
     return savedPlaces.filter((item) => item.favorite);
   }
@@ -144,6 +149,7 @@ export function MapContextProvider({ children }: MapContextProviderProps) {
         specificSavedPlaceIndex,
         setSpecificSavedPlaceIndex,
         getSavedPlaceById,
+        getSavedPlaceByPostalCode,
         getFavoritePlaces,
         addSavedPlace,
         setFavoriteInSavedPlace,
