@@ -49,8 +49,10 @@ const PlacesListItem = ({ data }: PlacesListItemProps) => {
 
   function handleDelete(event: MouseEvent) {
     event.stopPropagation();
-    if (isHighlighted) setSpecificSavedPlaceIndex(undefined);
-    deleteSavedPlace(data.id);
+    if (window.confirm("Excluir este item?")) {
+      if (isHighlighted) setSpecificSavedPlaceIndex(undefined);
+      deleteSavedPlace(data.id);
+    }
   }
 
   return (
