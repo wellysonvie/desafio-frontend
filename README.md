@@ -37,7 +37,7 @@ $ yarn start
 
 Agora você pode acessar [`http://localhost:3000`](http://localhost:3000) no navegador.
 
-Executando os testes de integração:
+Executando testes end-to-end:
 
 ```bash
 # Executar testes com browser ocultado
