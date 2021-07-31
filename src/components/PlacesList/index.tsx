@@ -9,14 +9,14 @@ type PlacesListProps = {
 const PlacesList = ({ data }: PlacesListProps) => {
   if (data.length === 0) {
     return (
-      <div className={styles.emptyList}>
+      <div id="emptyList" className={styles.emptyList}>
         <p>Nenhum item adicionado.</p>
       </div>
     );
   }
 
   return (
-    <ul className={styles.placesList}>
+    <ul id="placesList" className={styles.placesList}>
       {data.map((item) => (
         <PlacesListItem key={item.id} data={item} />
       ))}

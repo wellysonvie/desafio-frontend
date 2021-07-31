@@ -37,6 +37,16 @@ $ yarn start
 
 Agora você pode acessar [`http://localhost:3000`](http://localhost:3000) no navegador.
 
+Executando os testes de integração:
+
+```bash
+# Executar testes com browser ocultado
+$ yarn cy:run
+
+# Executando com Cypress Test Runner
+$ yarn cy:open
+```
+
 ---
 
 👨‍💻 Desenvolvido por [Wellyson Vieira]('https://github.com/wellysonvie/')

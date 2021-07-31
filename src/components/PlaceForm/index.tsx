@@ -74,7 +74,11 @@ const PlaceForm = ({ closeModal, data }: PlaceFormProps) => {
   };
 
   return (
-    <form className={styles.placeForm} onSubmit={handleSubmit(onSubmit)}>
+    <form
+      id="placeForm"
+      className={styles.placeForm}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <fieldset>
         <label htmlFor="postalCode">CEP:</label>
         <input
@@ -161,6 +165,7 @@ const PlaceForm = ({ closeModal, data }: PlaceFormProps) => {
           Cancelar
         </button>
         <button
+          id="btnSave"
           className={styles.btnSave}
           disabled={Object.entries(errors).length > 0}
         >

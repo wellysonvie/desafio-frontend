@@ -56,7 +56,7 @@ const PlacesListItem = ({ data }: PlacesListItemProps) => {
   }
 
   return (
-    <ul
+    <li
       className={cx(styles.placesListItem, { highlighted: isHighlighted })}
       onClick={handleClick}
     >
@@ -69,16 +69,16 @@ const PlacesListItem = ({ data }: PlacesListItemProps) => {
         </p>
       </div>
       <div className={styles.options}>
-        <span onClick={handleFavorite}>
+        <span id="btnFavorite" onClick={handleFavorite}>
           {data.favorite ? (
             <MdFavorite className={styles.favorite} />
           ) : (
             <MdFavoriteBorder />
           )}
         </span>
-        <HiOutlineTrash onClick={handleDelete} />
+        <HiOutlineTrash id="btnDelete" onClick={handleDelete} />
       </div>
-    </ul>
+    </li>
   );
 };
 

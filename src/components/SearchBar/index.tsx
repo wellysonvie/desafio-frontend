@@ -50,12 +50,13 @@ const SearchBar = () => {
     <div className={styles.searchBar}>
       <form>
         <input
+          id="search"
           type="string"
           placeholder="Pesquise pelo CEP"
           value={query}
           onChange={({ target }) => setQuery(target.value)}
         />
-        <button onClick={handleSearch}>
+        <button id="btnSearch" onClick={handleSearch}>
           <img src={searchImg} alt="Pesquisar" />
         </button>
         {result && (

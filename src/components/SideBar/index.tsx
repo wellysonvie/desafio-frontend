@@ -25,6 +25,7 @@ const SideBar = () => {
         {expanded ? "Fechar" : "Expandir"}
       </button>
       <div
+        id="listSelector"
         className={cx(styles.listSelector, {
           disabled: savedPlaces.length === 0,
         })}
@@ -54,7 +55,7 @@ const SideBar = () => {
           data={showFavoritePlacesList ? getFavoritePlaces() : savedPlaces}
         />
       ) : (
-        <div className={styles.emptyList}>
+        <div id="initialEmptyList" className={styles.emptyList}>
           <img src={destinationsImg} alt="Destinos" />
           <p>Gerencie os locais que você visitou na cidade.</p>
           <ul>
